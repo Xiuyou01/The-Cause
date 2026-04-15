@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --bg: #f4f4f0;
+  --black: #000000;
+  --white: #ffffff;
+  --dim: #666666;
+  --line: rgba(0, 0, 0, 0.12);
+  --line-w: rgba(255, 255, 255, 0.2);
+  --font: 'Inter', -apple-system, sans-serif;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-family: var(--font);
+  color: var(--black);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--bg);
+}
+
+a { color: inherit; text-decoration: none; }
+button { background: none; border: none; cursor: pointer; color: inherit; font-family: inherit; }
+ul, li { list-style: none; }
+::selection { background: var(--black); color: var(--bg); }
+
+/* Mask reveal */
+.m { display: inline-block; overflow: hidden; vertical-align: top; }
+.m > * {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 1.2s var(--ease);
+  will-change: transform;
+}
+.m > *.v { transform: translateY(0%); }
+
+/* Custom Cursor */
+* { cursor: none !important; }
+
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: var(--white);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  /* transform set by JS */
+  transition: width 0.3s var(--ease), height 0.3s var(--ease), background-color 0.3s var(--ease);
+  mix-blend-mode: difference;
+}
+
+#custom-cursor.active {
+  width: 60px;
+  height: 60px;
+  background-color: var(--white);
+}

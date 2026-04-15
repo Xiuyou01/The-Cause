@@ -1,0 +1,129 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/cards.css';
+
+export async function getStaticPaths() {
+  const thoughtsEntries = await getCollection('thoughts');
+  return thoughtsEntries.map(entry => ({
+    params: { slug: entry.id }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout title={entry.data.title}>
+  <div class="article-container bento-card">
+    <div class="article-header">
+      <h1 class="text-gradient">{entry.data.title}</h1>
+      <div class="meta-data">
+        <span class="date">{entry.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+        {entry.data.tags?.map((tag: string) => <span class="tag">#{tag}</span>)}
+      </div>
+      <p class="excerpt">{entry.data.excerpt}</p>
+    </div>
+    
+    <div class="markdown-content">
+      <Content />
+    </div>
+    
+    <div class="article-footer">
+      <a href="/thoughts" class="back-link">← 返回列表</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  .article-container {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 60px 80px;
+    z-index: 10;
+  }
+  .article-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 30px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  .article-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  .meta-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  .date { color: var(--accent-green); font-size: 0.9rem; }
+  .tag { color: var(--accent-orange); font-size: 0.8rem; border: 1px solid rgba(255,158,94,0.3); padding: 2px 8px; border-radius: 12px; }
+  .excerpt {
+    color: var(--text-muted-color);
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+
+  /* Markdown Content Styles */
+  .markdown-content h2, .markdown-content h3 {
+    color: #fff;
+    margin-top: 2em;
+    margin-bottom: 1em;
+  }
+  .markdown-content h2 { font-size: 1.8rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em;}
+  .markdown-content h3 { font-size: 1.4rem; color: var(--accent-pink); }
+  .markdown-content p {
+    line-height: 1.8;
+    color: var(--text-base-color);
+    margin-bottom: 1.5em;
+    font-weight: 300;
+  }
+  .markdown-content blockquote {
+    border-left: 4px solid var(--primary-gradient);
+    border-image: var(--primary-gradient) 1;
+    margin: 2em 0;
+    padding: 0.5em 2em;
+    background: rgba(255,255,255,0.02);
+    color: var(--text-muted-color);
+    font-style: italic;
+  }
+  .markdown-content ul, .markdown-content ol {
+    line-height: 1.8;
+    color: var(--text-base-color);
+    margin-bottom: 1.5em;
+    padding-left: 1.5em;
+    font-weight: 300;
+  }
+  .markdown-content li { margin-bottom: 0.5em; }
+  .markdown-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2em 0;
+  }
+  .markdown-content th, .markdown-content td {
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    text-align: left;
+  }
+  .markdown-content th { background: rgba(255,255,255,0.05); color: #fff; }
+
+  .article-footer {
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+  }
+  .back-link {
+    color: var(--text-muted-color);
+    font-size: 0.9rem;
+    transition: color 0.3s;
+    letter-spacing: 0.1em;
+  }
+  .back-link:hover { color: var(--accent-pink); }
+</style>

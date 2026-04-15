@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Card from '../../components/Card.astro';
+import { getCollection } from 'astro:content';
+import '../../styles/cards.css';
+
+const allThoughts = await getCollection('thoughts');
+allThoughts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="哲思列表">
+  <div class="page-container">
+    <h1 class="page-title text-gradient">哲思散章</h1>
+    <p class="page-subtitle">取消式浪漫主义与自然存在主义的坐标记录</p>
+
+    <div class="list-container">
+      {allThoughts.map(post => (
+        <Card title={post.data.title} href={`/thoughts/${post.id}`} class="list-card">
+          <p class="post-date">{post.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          <p class="card-excerpt">{post.data.excerpt}</p>
+          <div class="card-footer">
+            {post.data.tags?.map(tag => (
+              <span class="tag">#{tag}</span>
+            ))}
+            <span style="flex-grow:1; text-align:right;">阅读 ↗</span>
+          </div>
+        </Card>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 100px 20px;
+    position: relative;
+    z-index: 10;
+  }
+  .page-title {
+    font-size: 3rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .page-subtitle {
+    text-align: center;
+    color: var(--text-muted-color);
+    letter-spacing: 0.1em;
+    margin-bottom: 60px;
+    font-weight: 300;
+  }
+  .list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .list-card {
+    padding: 40px;
+  }
+  .post-date {
+    font-size: 0.85rem;
+    color: var(--accent-green);
+    margin-top: -10px;
+    margin-bottom: 20px;
+    letter-spacing: 0.1em;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+  }
+  .tag {
+    color: var(--accent-orange);
+    font-size: 0.8rem;
+    border: 1px solid rgba(255, 158, 94, 0.3);
+    padding: 2px 8px;
+    border-radius: 12px;
+  }
+</style>

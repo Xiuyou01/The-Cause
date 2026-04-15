@@ -1,0 +1,574 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// 6 characters from "因存在于我续", one card each
+const charCards = [
+  {
+    char: "因",
+    desc: "“因”不仅是逻辑学上的起因，更是宇宙生成论中的“第一推动力”与本体论中的绝对公理。\n\n目的论的倒置：从更广泛的哲学范畴来看，“因”不局限于过去，它同样可以是引导事物发展的“目的（Telos）”。它是万物演化的最高指向，是那个在时间尽头吸引着一切物质与意识向其靠拢的终极引力源。\n\n意义的基底：在人类认知的建构中，它是一切意义的原始发轫。无论是自然法则的铁律，还是人类文明的信仰，所有的架构都必须生长于一个不可动摇的“因”之上，它是抵御认知虚无的最后一道防线。",
+  },
+  {
+    char: "存",
+    desc: "“存”是热力学定律中的奇迹，是物质与能量在浩瀚时空中拒绝消亡的抗争状态。\n\n逆向做功的物理显现：宇宙的自然趋势是走向无序和热寂（熵增），而“存”恰恰代表着局部的高度有序化。从星系的凝聚到单细胞生物的呼吸，任何“存”的现象都是对自然衰败法则的暴力违抗，需要持续汲取能量才能维持其边界不被瓦解。\n\n跨越时空的留存：它不仅仅是此时此刻的静态现象，更是一种跨越时间刻度的时间粘性。无论是一块亿万年的化石，还是一种流传千古的思想，“存”意味着信息在时间长河中具备了不被轻易冲刷殆尽的实体硬度。\n\n精神的韧性：在泛生命哲学的维度，“存”宣告了一种不屈服的韧性。它不追求永恒的绝对静止，而是强调在充满摩擦力和损耗的现实世界中，保持内核不被同化的固执。",
+  },
+  {
+    char: "在",
+    desc: "“在”是空间与时间的绝对降落，是抽象概念向具象物理世界的现身。\n\n时空的绝对锚点：没有任何事物可以悬浮于真空的虚无之中。“在”是宇宙坐标系（x,y,z,t）中的一个确切点位。它将宏大的宇宙史收束于一个不可替代的局部，宣告了事物在这个特定维度的合法登陆。\n\n海德格尔式的“此在”：它强调了主体与周围环境的不可分割性。存在不是一种孤立的属性，而是“在世界之中（Being-in-the-world）”。它意味着主体必须去承受现实的重力，去感知周围物体的温度，去卷入时代的洪流。\n\n现场的见证：在历史与时间的流转中，“在”赋予了事物见证者的身份。无论世界如何变幻，宣称“我在此地，我在此时”，便是对虚无主义最直接的空间层面的反驳。",
+  },
+  {
+    char: "于",
+    desc: "“于”是常常被忽略的拓扑学界膜，是连接不同维度与不同主体的通用接口。\n\n关系的物理介质：宇宙并非孤立碎片的堆砌，而是一张巨大的关系网。“于”就是这张网上的节点与引力线。它表明了任何力量的施加、任何信息的传递，都必须跨越某道边界、借由某种介质才能完成。\n\n能量与意义的转嫁：它是一个极其冷酷且精准的介词，标定了方向与落脚点。当宏大的法则需要显现，当庞大的重量需要支撑，“于”就是那个将重力精准传导至受力面的结构性通道。\n\n主客体的视界线：在认知哲学中，它化作了横亘在客观世界（黑盒）与主观意识（显影）之间的那道屏幕。所有的感知、丈量与理解，都在这个名为“于”的交互界面上发生。",
+  },
+  {
+    char: "我",
+    desc: "“我”超越了生物学与社会学意义上的狭隘个体，泛指宇宙中所有具备观测与感知能力的节点。\n\n量子力学的观测者：在微观物理的视阈下，如果没有观测者的介入，宇宙永远处于模糊的概率云之中。“我”的出现，迫使波函数发生坍缩，让不确定的世界定格为确切的现实。宇宙因为有了“我”，才得以被丈量。\n\n现象学的中心：世界并非均匀展开，而是以每一个“我”为原点向外辐射的视界。失去了这个感知的中心坐标，所有的光影、声音与意义都将失去接收端，宇宙的喧嚣将沦为无意义的死寂。\n\n意义的终极承载器：大自然本身没有道德，也没有悲喜。“我”是宇宙中唯一能够产生价值判断、能够体验痛苦与崇高的容器。一切宏大哲理最终都必须汇聚在这个极其脆弱的意识终端上。",
+  },
+  {
+    char: "续",
+    desc: "“续”是时间维度的动能，是宇宙万物演化与意识主体实践的永恒引擎。\n\n时间之矢的物理化：宇宙并非一张静态的快照，而是由无数个“瞬间”连续拼接而成的动态长卷。“续”是克服静止惯性的力量，是让时间齿轮保持咬合、不断向前推进的动力学过程。\n\n对抗遗忘与消亡的重体力劳动：在熵增的宇宙中，一切事物都具有向下滑落的重力。“续”是逆流而上的划桨动作。无论是基因的繁衍、文明的传承，还是个体信念的坚守，都需要主体不断地向系统内注入能量，才能维持其不致中断。",
+  },
+];
+
+---
+
+<BaseLayout title="因为 · The Cause">
+  <!-- ========== PHASE 1: RING MASK HERO ========== -->
+  <section class="hero-ring" id="hero-ring">
+    <div class="hero-bounds">
+      <!-- Layer 1 (base): black on white -->
+      <div class="hero-layer base-layer">
+        <div class="hero-bundle">
+          <div class="tl-element">
+            <div class="cn-row-refined">
+              <span>为</span>
+              <span>因</span>
+            </div>
+          </div>
+          <div class="center-element">Inverted Causation</div>
+        </div>
+      </div>
+
+      <!-- Layer 2 (reveal): white on black -->
+      <div class="hero-layer reveal-layer" id="reveal-layer">
+        <div class="hero-bundle">
+          <div class="tl-element">
+            <div class="cn-row-six"><span>倒</span><span>果</span></div>
+          </div>
+          <div class="center-element">Inverted Causation</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PHASE 2: STRATEGY CARDS — one per character ========== -->
+  <section class="strat-section">
+    {
+      charCards.map((c, i) => (
+        <div
+          class={`strat-card ${i % 2 === 0 ? "card-light" : "card-dark"}`}
+          style={`z-index: ${10 + i};`}
+        >
+          <div class="strat-content">
+            <div class="strat-left">
+              <span class="strat-char">{c.char}</span>
+            </div>
+            <div class="strat-right">
+              <div class="paper-lines">
+                <p class="strat-desc">{c.desc}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="ft">
+    <div class="ft-top">
+      <div class="m">
+        <div class="ft-branding">
+          <h2 class="ft-main-cn">因存在于我续</h2>
+          <p class="ft-sub-en">The Causa in me continuat</p>
+        </div>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <div class="ft-info">
+        <span class="ft-copy">2026 因为 · The Cause</span>
+        <span class="ft-creator">@XiuYou</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACK TO TOP BUTTON -->
+  <button id="back-to-top" class="back-to-top" aria-label="Back to Top">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 15l-6-6-6 6"></path>
+    </svg>
+  </button>
+</BaseLayout>
+
+<script>
+  // =============================================
+  // CONCENTRIC RING MASK — scroll-driven, bidirectional
+  // =============================================
+  const revealLayer = document.getElementById("reveal-layer");
+  const heroRing = document.getElementById("hero-ring");
+  const bundles = document.querySelectorAll(".hero-bundle");
+
+  let targetProgress = 0;
+  let currentProgress = 0;
+  const lerpFactor = 0.08;
+
+  function update() {
+    if (!heroRing || !revealLayer) return;
+
+    // Fixed architecture uses absolute scroll position
+    const scrollY = window.scrollY;
+    const vh = window.innerHeight;
+
+    // Normalize progress over the first 100vh
+    targetProgress = Math.max(0, Math.min(1, scrollY / vh));
+
+    currentProgress += (targetProgress - currentProgress) * lerpFactor;
+
+    // Force completion for pixel-perfect handoff
+    const p = targetProgress > 0.97 ? 1 : currentProgress;
+
+    // Hide hero when the content section (strat-section) starts overlapping
+    // Since strat-section starts at 200vh, we keep hero until then
+    if (scrollY >= vh * 2) {
+      heroRing.style.visibility = "hidden";
+      heroRing.style.pointerEvents = "none";
+    } else {
+      heroRing.style.visibility = "visible";
+      heroRing.style.pointerEvents = "auto";
+    }
+
+    // 1. SCALING: Shrink text (1.0 -> 0.6)
+    const scale = 1 - p * 0.4;
+    bundles.forEach((b: any) => {
+      if (b) b.style.transform = `scale(${scale})`;
+    });
+
+    // 2. MASK: Physical Thin-to-Thick expansion
+    // If p=0.1, thickness ~ 2.8. If p=0.8, thickness ~ 130.
+    if (p < 0.001) {
+      revealLayer.style.opacity = "0";
+      heroRing.style.background = "#ffffff";
+    } else {
+      revealLayer.style.opacity = "1";
+      const outerR = p * 195; // Extra radius to cover 100%
+      const thickness = 2 + Math.pow(p, 1.8) * 220; // Exponentially thicker
+      const innerR = Math.max(0, outerR - thickness);
+
+      const grad = `radial-gradient(circle at 50% 50%, transparent ${innerR}%, black ${innerR + 0.15}%, black ${outerR}%, transparent ${outerR + 0.15}%)`;
+      revealLayer.style.maskImage = grad;
+      revealLayer.style.webkitMaskImage = grad;
+
+      // Force background to black earlier to ensure seamless handoff
+      if (p > 0.85) {
+        heroRing.style.backgroundColor = "#000000";
+      } else {
+        heroRing.style.backgroundColor = "#ffffff";
+      }
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  update();
+
+  // =============================================
+  // REVEAL ANIMATIONS FOR STRATEGY CARDS
+  // =============================================
+  const cards = document.querySelectorAll(".strat-card");
+  const observerOptions = {
+    threshold: 0.25, // Reveal when 25% of card is in view
+    rootMargin: "0px",
+  };
+
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("reveal");
+      }
+    });
+  }, observerOptions);
+
+  cards.forEach((card) => cardObserver.observe(card));
+
+  // =============================================
+  // BACK TO TOP BUTTON LOGIC
+  // =============================================
+  const btt = document.getElementById("back-to-top");
+  if (btt) {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 400) {
+        btt.classList.add("visible");
+      } else {
+        btt.classList.remove("visible");
+      }
+    });
+
+    btt.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+</script>
+
+<style>
+  /* ============================================
+   HERO RING MASK
+   ============================================ */
+  .hero-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 10;
+    overflow: hidden;
+    background: #ffffff;
+    transition: background 0.2s ease;
+    will-change: transform;
+  }
+
+  .hero-bounds {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-bundle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .base-layer {
+    color: var(--black);
+    background: #ffffff;
+    z-index: 1;
+  }
+
+  .reveal-layer {
+    color: var(--white);
+    background: var(--black);
+    z-index: 2;
+    opacity: 0;
+    will-change: mask-image, opacity;
+  }
+
+  /* ============================================
+   STRUCTURAL POSITIONING (Mirrored exactly)
+   ============================================ */
+  .tl-element {
+    /* Centered within bundle */
+  }
+
+  .center-element {
+    font-size: clamp(0.8rem, 2.5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0.8;
+  }
+
+  /* ============================================
+   TYPOGRAPHY IN TL-ELEMENT
+   ============================================ */
+  .cn-row-refined,
+  .cn-row-six {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.15em; /* Increased gap */
+  }
+
+  .cn-row-refined > span,
+  .cn-row-six > span {
+    font-family: serif;
+    font-size: clamp(4rem, 14vw, 16rem);
+    font-weight: 900;
+    line-height: 1; /* Increased line-height from 0.85 */
+    letter-spacing: -0.02em;
+  }
+
+  /* Redundant styles removed to ensure alignment */
+
+  /* Matching the same giant size for reveal */
+  .reveal-layer .center-element {
+    font-size: clamp(0.8rem, 2.5vw, 3rem);
+  }
+
+  /* ============================================
+   STRATEGY CARDS — one per character
+   ============================================ */
+  .strat-section {
+    position: relative;
+    z-index: 20;
+    margin-top: 200vh; /* Buffer of 100vh for mask expansion, then content begins */
+    background: transparent;
+  }
+  .strat-card {
+    position: sticky;
+    top: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    transition: background 0.8s var(--ease), color 0.8s var(--ease);
+  }
+
+  .card-light {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .card-dark {
+    background: #000000;
+    color: #ffffff;
+  }
+
+  /* Subtle noise/texture overlay */
+  .strat-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("https://grainy-gradients.vercel.app/noise.svg");
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .strat-content {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 8vw;
+    z-index: 2;
+    gap: 4vw;
+  }
+
+  .strat-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: all 0.8s var(--ease);
+  }
+
+  .strat-card.reveal .strat-left {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .strat-char {
+    font-family: serif;
+    font-size: clamp(8rem, 24vw, 30rem); /* Larger size */
+    font-weight: 900;
+    line-height: 0.75;
+    margin-left: -0.05em;
+  }
+
+  .strat-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: all 0.8s var(--ease);
+    transition-delay: 0.2s;
+  }
+
+  .strat-card.reveal .strat-right {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .paper-lines {
+    position: relative;
+    padding: 60px 40px;
+    width: 100%;
+    max-width: 700px;
+  }
+
+  /* Refined Paper Line Effect — Pure Black/White & Tighter */
+  .paper-lines::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: repeating-linear-gradient(
+      transparent,
+      transparent 31px,
+      currentColor 31px,
+      currentColor 32px
+    );
+    opacity: 0.25; /* High contrast but kept slightly lower than text for readability */
+    pointer-events: none;
+  }
+
+  .strat-desc {
+    font-size: clamp(1rem, 1.2vw, 1.15rem);
+    line-height: 32px; /* Reduced from 48px */
+    font-weight: 400;
+    position: relative;
+    z-index: 2;
+    white-space: pre-wrap;
+  }
+
+
+  /* ============================================
+   FOOTER
+   ============================================ */
+  .ft {
+    background: var(--black);
+    color: var(--white);
+  }
+  .ft-top {
+    padding: 20vh 4vw;
+    border-bottom: 1px solid var(--line-w);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .ft-branding {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+  }
+  .ft-main-cn {
+    font-family: serif;
+    font-size: clamp(3rem, 10vw, 10rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0.1em; /* Increased spacing */
+    margin: 0;
+    color: #fff;
+  }
+  .ft-sub-en {
+    font-family: var(--font-sans, system-ui);
+    font-size: clamp(0.7rem, 2vw, 1.8rem);
+    font-weight: 700;
+    letter-spacing: 0.4em; /* Very wide spacing for premium feel */
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+  }
+  .ft-bottom {
+    padding: 30px 4vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ft-links {
+    display: flex;
+    gap: 30px;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .ft-links a:hover {
+    color: #fff;
+  }
+  .ft-copy {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .ft-creator {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.05em;
+  }
+
+  /* BACK TO TOP BUTTON STYLES */
+  .back-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 50px;
+    height: 50px;
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .back-to-top:hover {
+    background: #000000;
+    color: #ffffff;
+    transform: translateY(-5px);
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 600px) {
+    .back-to-top {
+      bottom: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .strat-content {
+      grid-template-columns: 1fr;
+    }
+    .strat-dashes {
+      display: none;
+    }
+    .strat-title {
+      flex-direction: column;
+      gap: 5px;
+    }
+  }
+</style>

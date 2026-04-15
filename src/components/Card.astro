@@ -1,0 +1,23 @@
+---
+interface Props {
+  title?: string;
+  href?: string;
+  class?: string;
+}
+
+const { title, href, class: className = '' } = Astro.props;
+---
+
+{
+  href ? (
+    <a href={href} class={`bento-card ${className}`}>
+      {title && <h3 class="card-title">{title}</h3>}
+      <slot />
+    </a>
+  ) : (
+    <div class={`bento-card ${className}`}>
+      {title && <h3 class="card-title">{title}</h3>}
+      <slot />
+    </div>
+  )
+}

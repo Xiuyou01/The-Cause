@@ -1,0 +1,62 @@
+---
+---
+
+<nav class="navbar">
+  <div class="container">
+    <a href="/" class="logo">
+      <span class="logo-cn">因为</span>
+      <span class="logo-en">THE CAUSE</span>
+    </a>
+  </div>
+</nav>
+
+<style>
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 30px 60px;
+    mix-blend-mode: difference;
+    transition: transform 0.8s var(--ease);
+  }
+
+  .container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 1800px;
+    margin: 0 auto;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--white);
+    letter-spacing: 0.1em;
+  }
+
+  .logo-cn {
+    font-size: 1.4rem;
+    font-weight: 700;
+    font-family: serif;
+  }
+
+  .logo-en {
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+    padding-left: 12px;
+    margin-top: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 20px 30px;
+    }
+  }
+</style>
+</style>
